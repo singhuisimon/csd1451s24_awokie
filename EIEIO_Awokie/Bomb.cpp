@@ -5,7 +5,7 @@
 #include "Bomb.h"
 
 // initialising
-int bomb = 1;
+int bomb = 0;
 
 void isbomb() {
 
@@ -28,10 +28,10 @@ void isbomb() {
 	// if key triggered logic
 	if (bomb == 1) {
 		// draws text
-		
+
 
 		AEGfxPrint(pFont,       // font handle given by AEGfxCreateFont()
-			"Bomb",			// null-terminated c-string to print
+			"Bomb undone",			// null-terminated c-string to print
 			-0.1f,				// x position on normalized coordinates, ranging from -1.f to 1.f
 			0.f,				// y position in normalized coordinates, ranging from -1.f to 1.f
 			2.f,				// how much to scale the text by
@@ -42,10 +42,10 @@ void isbomb() {
 
 	}
 
-		
 
-		
-	
+
+
+
 
 
 	// free the font
