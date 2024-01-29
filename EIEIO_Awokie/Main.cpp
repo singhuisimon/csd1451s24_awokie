@@ -5,6 +5,8 @@
 #include "AEEngine.h"
 #include <cstdint>
 
+#include "Bomb.h"
+
 // ---------------------------------------------------------------------------
 // main
 
@@ -262,6 +264,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 			}
 		}
+
+		// call bomb function
+		isbomb();
 
 		// Informing the system about the loop's end
 		AESysFrameEnd();
