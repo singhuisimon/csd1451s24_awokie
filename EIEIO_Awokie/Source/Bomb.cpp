@@ -34,17 +34,13 @@ void isbomb() {
 			"Bomb undone",			// null-terminated c-string to print
 			-0.1f,				// x position on normalized coordinates, ranging from -1.f to 1.f
 			0.f,				// y position in normalized coordinates, ranging from -1.f to 1.f
-			2.f,				// how much to scale the text by
+			1.f,				// how much to scale the text by
 			1.f,				// percentage of red, ranging from 0.f to 1.f
 			1.f,				// percentage of green, ranging from 0.f to 1.f
 			1.f,				// percentage of blue, ranging from 0.f to 1.f
 			1.f);				// percentage of alpha, ranging from 0.f to 1.f
 
 	}
-
-
-
-
 
 
 
