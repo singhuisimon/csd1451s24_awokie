@@ -7,15 +7,6 @@
 #include "Initialisation.h"
 
 
-//#define SIZE_BUF 2
-//#define REN_BUF 0
-//#define UPD_BUF 1
-//#define SIZE_ROW 17
-//#define SIZE_COL 33
-//#define PLAY_AREA_WIDTH 1650
-//#define PLAY_AREA_HEIGHT 900
-//#define CEll_HEIGHT 47.5f
-//#define CEll_BUF 2.5f
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,

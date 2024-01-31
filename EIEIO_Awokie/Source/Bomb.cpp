@@ -25,12 +25,11 @@ f32 yaxis = ((PLAY_AREA_HEIGHT - 100 + CEll_HEIGHT + CEll_BUF) / 2);
 void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE_COL]) {
 
 	// testing only to be deleted------------------------
-	bomb_array[bombstate][2][2] = 1;
-	bomb_array[bombstate][1][1] = 1;
+	//bomb_array[bombstate][2][2] = 1;
+	//bomb_array[bombstate][1][1] = 1;
 	//bomb_array[bombstate][8][2] = 1;
-	bomb_array[bombstate][4][4] = 1;
-	bomb_array[bombstate][7][7] = 1;
-	//bomb_array[bombstate][15][15] =1;
+	//bomb_array[bombstate][4][4] = 1;
+	//bomb_array[bombstate][7][7] = 1;
 	// testing code ends here-----------------------------
 
 	
@@ -51,7 +50,7 @@ void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE
 		AEInputGetCursorPosition(&pX, &pY);
 
 		index_col = pX / (CEll_HEIGHT + CEll_BUF);
-		index_row = (pY / (CEll_HEIGHT + CEll_BUF)) + (CEll_HEIGHT / 2);
+		index_row = (pY - CEll_HEIGHT / 1.2) / (CEll_HEIGHT + CEll_BUF);
 		bomb_array[bombstate][index_row][index_col] = !bomb_array[bombstate][index_row][index_col];
 	}
 
