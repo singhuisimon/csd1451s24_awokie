@@ -3,7 +3,7 @@ enum objectId {
 	EMPTY_CELL = 0,						// 0 Empty cell so that the user passes through. 
 	SOFT_WALL,							// 1 Soft Wall - cannot be passed through but can be destroyed.
 	HARD_WALL,							// 2 Hard Wall - cannot pass through, cannot be destroyed
-	DISINTEGRATING_WALL,					// 3 Disappearing Wall - cannot pass through unless the wall is destroyed or destroys itself
+	DISINTEGRATING_WALL,				// 3 Disappearing Wall - cannot pass through unless the wall is destroyed or destroys itself
 	PLAYER,								// 4 Player - cannot pass through above, can pass through bomb, cannot pass through Wolves
 	WOLF,								// 5 Wolves - cannot pass through walls or player
 	SHEEP,								// 6 Sheep - Spawns in a destructable wall, collected when colliding with player or wolves
@@ -13,6 +13,7 @@ enum objectId {
 										//					All others are destroyed if hit. Player loses a life.
 	DOOR								// 10 Door - User collides with this holding the key to complete the level.
 };
+
 enum collisionResult{
 	PASS = 0,							// 0 Pass through empty cells or explosion passes through undestructable walls
 	STOP,								// 1 Do not move. Or when explosion stops when hitting undestructable walls. 

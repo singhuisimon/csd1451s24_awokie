@@ -4,6 +4,8 @@
 #include "AEEngine.h"
 #include <iostream>
 #include "Bomb.h"
+#include "collision.h"
+#include "enum.h"
 
 
 //#define SIZE_BUF 2
@@ -171,7 +173,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		// call bomb function
 		isbomb();
-
+		collisionResult(EMPTY_CELL, PLAYER);
 		// Informing the system about the loop's end
 		AESysFrameEnd();
 
