@@ -5,7 +5,7 @@
 #include <iostream>
 #include "Bomb.h"
 #include "Initialisation.h"
-#include "Player.h"
+#include "player.h"
 
 
 
@@ -40,7 +40,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	int cell_alive = 1; // brown barrel
 	int cell_dead = 0; // green grass
 	int array[SIZE_ROW][SIZE_COL];
-	Player* player2 = new Player{};
 
 		for (int i = 0; i < SIZE_ROW; i++) {
 			for (int j = 0; j < SIZE_COL; j++) {
@@ -98,6 +97,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	AEGfxVertexList* pMesh = AEGfxMeshEnd();
 	AEGfxTexture* pTex = AEGfxTextureLoad("Assets/fixed-tiles.png");
 	AEGfxTexture* pBombTex = AEGfxTextureLoad("Assets/bomb01.png");
+	AEGfxTexture* pPlayerTex = AEGfxTextureLoad("Assets/farmer.png");
 
 
 	// Create a scale matrix that scales by 500 x and y
@@ -108,6 +108,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// 200 in the x-axis and 100 in the y-axis
 	AEMtx33 translate = { 0 };
 	AEMtx33 transform[SIZE_ROW][SIZE_COL] = { 0 };
+	AEMtx33 transform_player = { 0 };
+
 	
 	// create the grids
 	for (int i = 0; i < SIZE_ROW; i++) {
@@ -168,8 +170,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		isbomb(pMesh, pBombTex, transform);
 
 		//call player function
-		player(player2);
-		//playermovement();
+		player(pMesh, pPlayerTex, transform_player);
+		playermovement();
 
 		// Informing the system about the loop's end
 		AESysFrameEnd();
@@ -183,7 +185,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	AEGfxMeshFree(pMesh);
 	AEGfxDestroyFont(pFont);
 	AEGfxTextureUnload(pBombTex);
-	freePlayer(player2);
+	AEGfxTextureUnload(pPlayerTex);
 
 
 	// free the system

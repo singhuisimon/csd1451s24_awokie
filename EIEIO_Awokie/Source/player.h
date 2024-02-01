@@ -1,11 +1,9 @@
 #pragma once
 
-//struct
-struct Player {
-	AEGfxTexture* pTexPlayer;
-	AEGfxVertexList* pMeshPlayer;
-};
+#include "Initialisation.h"
 
-void player(Player*);
-void freePlayer(Player*);
+
+void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player);
+
+
 void playermovement();
