@@ -14,7 +14,6 @@
     <ClCompile Include="Source\player.cpp" />
     <ClCompile Include="Source\Bomb.cpp" />
     <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\player.h" />
