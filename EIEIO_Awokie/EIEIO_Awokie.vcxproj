@@ -11,11 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\player.cpp" />
     <ClCompile Include="Source\Bomb.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\player.h" />
     <ClInclude Include="Source\Bomb.h" />
+    <ClInclude Include="Source\Initialisation.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

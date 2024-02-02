@@ -4,19 +4,10 @@
 #include "AEEngine.h"
 #include <iostream>
 #include "Bomb.h"
-#include "collision.h"
-#include "enum.h"
+#include "Initialisation.h"
+#include "player.h"
 
 
-//#define SIZE_BUF 2
-//#define REN_BUF 0
-//#define UPD_BUF 1
-#define SIZE_ROW 17
-#define SIZE_COL 33
-#define PLAY_AREA_WIDTH 1650
-#define PLAY_AREA_HEIGHT 900
-#define CEll_HEIGHT 47.5f
-#define CEll_BUF 2.5f
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -105,6 +96,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// Saving the mesh (list of triangles) in pMesh
 	AEGfxVertexList* pMesh = AEGfxMeshEnd();
 	AEGfxTexture* pTex = AEGfxTextureLoad("Assets/fixed-tiles.png");
+	AEGfxTexture* pBombTex = AEGfxTextureLoad("Assets/bomb01.png");
+	AEGfxTexture* pPlayerTex = AEGfxTextureLoad("Assets/farmer.png");
 
 
 	// Create a scale matrix that scales by 500 x and y
@@ -115,6 +108,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// 200 in the x-axis and 100 in the y-axis
 	AEMtx33 translate = { 0 };
 	AEMtx33 transform[SIZE_ROW][SIZE_COL] = { 0 };
+	AEMtx33 transform_player = { 0 };
+
 	
 	// create the grids
 	for (int i = 0; i < SIZE_ROW; i++) {
@@ -172,8 +167,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 
 		// call bomb function
-		isbomb();
+		isbomb(pMesh, pBombTex, transform);
+
+		//call player function
+		player(pMesh, pPlayerTex, transform_player);
+		playermovement();
+
+		//call collision function
 		collisionResult(EMPTY_CELL, PLAYER);
+
 		// Informing the system about the loop's end
 		AESysFrameEnd();
 
@@ -182,8 +184,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			gGameRunning = 0;
 	}
 
+	// free everything
 	AEGfxMeshFree(pMesh);
 	AEGfxDestroyFont(pFont);
+	AEGfxTextureUnload(pBombTex);
+	AEGfxTextureUnload(pPlayerTex);
 
 
 	// free the system
