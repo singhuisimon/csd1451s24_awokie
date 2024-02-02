@@ -1,13 +1,12 @@
-
-
 #include <crtdbg.h> // To check for memory leaks
 #include "AEEngine.h"
 #include <iostream>
+
+// Header Files
 #include "Bomb.h"
 #include "Initialisation.h"
 #include "Player.h"
-
-
+#include "AI.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -96,8 +95,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// Saving the mesh (list of triangles) in pMesh
 	AEGfxVertexList* pMesh = AEGfxMeshEnd();
+	AEGfxTexture* pWolfTex = AEGfxTextureLoad("Assets/wolf01.png");
 	AEGfxTexture* pTex = AEGfxTextureLoad("Assets/fixed-tiles.png");
 	AEGfxTexture* pBombTex = AEGfxTextureLoad("Assets/bomb01.png");
+
 
 
 	// Create a scale matrix that scales by 500 x and y
@@ -171,6 +172,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		player(player2);
 		//playermovement();
 
+		move_ai();
+
+		draw_ai(pMesh, pWolfTex);
+
+
 		// Informing the system about the loop's end
 		AESysFrameEnd();
 
@@ -179,13 +185,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			gGameRunning = 0;
 	}
 
-	// free everything
+	// Free
 	AEGfxMeshFree(pMesh);
 	AEGfxDestroyFont(pFont);
+	// Textures
 	AEGfxTextureUnload(pBombTex);
+	AEGfxTextureUnload(pWolfTex);
+
 	freePlayer(player2);
 
-
-	// free the system
+	// Free the system
 	AESysExit();
 }

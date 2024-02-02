@@ -11,13 +11,35 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AI.cpp" />
     <ClCompile Include="Source\Bomb.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AI.h" />
     <ClInclude Include="Source\Bomb.h" />
     <ClInclude Include="Source\Initialisation.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\ame.png" />
+    <Image Include="Assets\bomb01.png" />
+    <Image Include="Assets\border.png" />
+    <Image Include="Assets\death01.png" />
+    <Image Include="Assets\PlanetTexture.png" />
+    <Image Include="Assets\sheep01.png" />
+    <Image Include="Assets\sheep02.png" />
+    <Image Include="Assets\sheep03.png" />
+    <Image Include="Assets\sheep04.png" />
+    <Image Include="Assets\sheep05.png" />
+    <Image Include="Assets\wolf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\bouken.mp3" />
+    <Media Include="Assets\ore.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Assets\liberation-mono.ttf" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
