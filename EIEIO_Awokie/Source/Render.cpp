@@ -1,6 +1,4 @@
 #include <crtdbg.h> // To check for memory leaks
-#include "AEEngine.h"
-#include "enum.h"
 #include "Render.h"
 
 void draw_hardwall(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[SIZE_ROW][SIZE_COL])

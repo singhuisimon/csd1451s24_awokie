@@ -54,8 +54,7 @@ void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE
 
 	for (int i = 0; i < SIZE_ROW; i++) {
 		for (int j = 0; j < SIZE_COL; j++) {
-
-
+			 
 			if (bomb_array[bombstate][i][j] == 1) {
 
 				// draw the bomb

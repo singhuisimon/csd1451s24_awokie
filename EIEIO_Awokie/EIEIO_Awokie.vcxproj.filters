@@ -27,6 +27,9 @@
     <ClCompile Include="Source\collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Render.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Bomb.h">
@@ -44,5 +47,68 @@
     <ClInclude Include="Source\enum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Render.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\ame.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\bomb01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\border.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\death01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\farmer.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\PlanetTexture.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\sheep01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\sheep02.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\sheep03.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\sheep04.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\sheep05.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\breakables.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\farmer3d.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\fixed-tiles.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\grass.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\bouken.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Assets\ore.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Assets\liberation-mono.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
   </ItemGroup>
 </Project>

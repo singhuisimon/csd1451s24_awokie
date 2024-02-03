@@ -211,7 +211,6 @@ allcollision collisionResult(int objectId, int objectId2, allcollision collision
 					collisionData.collisionresult = STOP;
 					return collisionData;
 				}
-		
 			}
 			break;
 		}
@@ -237,7 +236,7 @@ allcollision collisionResult(int objectId, int objectId2, allcollision collision
 				}
 				case DOOR: {
 					//if collision statement
-					//if no key 
+					//if no key
 					collisionData.collisionresult = STOP;
 					return collisionData;
 					// else if key and sheep
@@ -268,7 +267,6 @@ allcollision collisionResult(int objectId, int objectId2, allcollision collision
 					collisionData.collisionresult = PASS;
 					return collisionData;
 				}
-
 			}
 			break;
 		}
@@ -441,7 +439,7 @@ allcollision collisionResult(int objectId, int objectId2, allcollision collision
 }
 
 // Check if there is collision within the same frame.
-allcollision collide(int stationaryId, int movingId, int xVelo, int yVelo, int xPos2, int yPos2, int result, allcollision collisionData) {
+allcollision collide(int stationaryId, int movingId, PlayerStruct player, int result, allcollision collisionData) {
 	if (result == STOP) {
 		std::cout << "STOP" << std::endl;
 		collisionData.collisionresult = STOP;
@@ -450,6 +448,11 @@ allcollision collide(int stationaryId, int movingId, int xVelo, int yVelo, int x
 	else if (result == PASS) {
 		std::cout << "PASS" << std::endl;
 		collisionData.collisionresult = PASS;
+		return collisionData;
+	}
+	else if (result == DESTROY) {
+		std::cout << "DESTROY" << std::endl;
+		collisionData.collisionresult = DESTROY;
 		return collisionData;
 	}
 	return collisionData;

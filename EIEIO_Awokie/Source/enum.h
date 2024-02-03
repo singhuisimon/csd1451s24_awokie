@@ -21,3 +21,8 @@ enum collisionResult{
 										// 2 Destroy also used when enemy or bomb hits the sheep.
 	COLLECT								// 3 destroy and collect might be the same. Collect for key and sheeps
 };
+
+struct Cell {
+	objectId state;
+	//float disintegrationTimers[SIZE_ROW][SIZE_COL];
+};

@@ -5,9 +5,9 @@
 //float player_x = 100.f;
 //float player_y = -175.f;
 
-PlayerStruct player2;
+//PlayerStruct player2
 
-void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player)
+void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player, PlayerStruct player2)
 {
 	
 	// Create a scale matrix that scales by 500 x and y
@@ -50,45 +50,45 @@ void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player
 
 
 
-PlayerStruct playermovement(int collided)
+PlayerStruct playermovement(int collided, PlayerStruct player2)
 {
 	if (collided == PASS) {
 		if (AEInputCheckCurr(AEVK_W))
 		{
-			player2.y += 5;
-			player2.veloY = player2.y + 5;
+			player2.y += PLAYER_MOVE;
+			player2.veloY = player2.y + PLAYER_MOVE;
 		}
 		if (AEInputCheckCurr(AEVK_S))
 		{
-			player2.y -= 5;
-			player2.veloY = player2.y - 5;
+			player2.y -= PLAYER_MOVE;
+			player2.veloY = player2.y - PLAYER_MOVE;
 		}
 		if (AEInputCheckCurr(AEVK_D))
 		{
-			player2.x += 5;
-			player2.veloX = player2.x + 5;
+			player2.x += PLAYER_MOVE;
+			player2.veloX = player2.x + PLAYER_MOVE;
 		}
 		if (AEInputCheckCurr(AEVK_A))
 		{
-			player2.x -= 5;
-			player2.veloX = player2.x - 5;
+			player2.x -= PLAYER_MOVE;
+			player2.veloX = player2.x - PLAYER_MOVE;
 		}
 	}else if (collided == STOP){
 		if (AEInputCheckCurr(AEVK_W))
 		{
-			player2.veloY = player2.y + 5;
+			player2.veloY = player2.y + PLAYER_MOVE;
 		}
 		if (AEInputCheckCurr(AEVK_S))
 		{
-			player2.veloY = player2.y - 5;
+			player2.veloY = player2.y - PLAYER_MOVE;
 		}
 		if (AEInputCheckCurr(AEVK_D))
 		{
-			player2.veloX = player2.x + 5;
+			player2.veloX = player2.x + PLAYER_MOVE;
 		}
 		if (AEInputCheckCurr(AEVK_A))
 		{
-			player2.veloX = player2.x - 5;
+			player2.veloX = player2.x - PLAYER_MOVE;
 		}
 	}
 	

@@ -46,6 +46,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	AESysReset();
 
 	allcollision collision;
+
 	f32 xaxis = -((PLAY_AREA_WIDTH + CEll_HEIGHT + CEll_BUF) /2);
 	f32 yaxis = ((PLAY_AREA_HEIGHT-100 + CEll_HEIGHT + CEll_BUF) / 2);
 	Cell array[SIZE_ROW][SIZE_COL];
@@ -320,7 +321,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		// check if forcing the application to quit
 		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
-			gGameRunning = 0;\
+			gGameRunning = 0;
 	}
 
 	AEGfxMeshFree(pMesh);

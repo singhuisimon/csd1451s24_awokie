@@ -1,14 +1,30 @@
-
-
-#include <crtdbg.h> // To check for memory leaks
-#include "Bomb.h"
-#include "collision.h"
-#include "Initialisation.h"
-#include "player.h"
-#include "enum.h"
-#include "AEEngine.h"
+// -------------------------- LIBRARY DEFINITIONS ----------------------------
 #include <iostream>
+#include <stdlib.h>   
+#include <time.h>
+#include <crtdbg.h> // To check for memory leaks
 
+
+// ------------------------ HEADER FILE DEFINITIONS --------------------------
+#include "AEEngine.h"
+#include "Structures.h"
+#include "Bomb.h"
+#include "Initialisation.h"
+#include "Render.h"
+#include "enum.h"
+#include "collision.h"
+#include "player.h"
+// ---------------------------------------------------------------------------
+
+
+// without texture, multiple sprite, keypress, pause state
+
+// ---------------------------------------------------------------------------
+// main
+
+//#define SIZE_BUF 2
+//#define REN_BUF 0
+//#define UPD_BUF 1
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -24,8 +40,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	int gGameRunning = 1;
 
 	// Initialization of your own variables go here
-	PlayerStruct player2;
-	allcollision collision;
 
 	// Using custom window procedure
 	AESysInit(hInstance, nCmdShow, PLAY_AREA_WIDTH, PLAY_AREA_HEIGHT, 1, 60, true, NULL);
@@ -35,51 +49,91 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// reset the system modules
 	AESysReset();
+	PlayerStruct player2;
+	allcollision collision;
 
-	f32 xaxis = -((PLAY_AREA_WIDTH + CEll_HEIGHT + CEll_BUF) /2);
-	f32 yaxis = ((PLAY_AREA_HEIGHT-100 + CEll_HEIGHT + CEll_BUF) / 2);
-	s8 pFont = AEGfxCreateFont("Assets/liberation-mono.ttf", 72);
-	int array[SIZE_ROW][SIZE_COL];
+	f32 xaxis = -((PLAY_AREA_WIDTH + CEll_HEIGHT + CEll_BUF) / 2);
+	f32 yaxis = ((PLAY_AREA_HEIGHT - 100 + CEll_HEIGHT + CEll_BUF) / 2);
+	Cell array[SIZE_ROW][SIZE_COL] = {};
 
-		for (int i = 0; i < SIZE_ROW; i++) {
-			for (int j = 0; j < SIZE_COL; j++) {
-				array[i][j] = EMPTY_CELL; // the green grass
+	for (int i = 0; i < SIZE_ROW; i++) {
+		for (int j = 0; j < SIZE_COL; j++) {
+			array[i][j].state = EMPTY_CELL;
+		}
+	}
+
+	//  top bottom boundary hardwalls
+	for (int i = 0; i < SIZE_ROW; i++) {
+		for (int j = 0; j < SIZE_COL; j++) {
+			if (i == 0 || i == (SIZE_ROW - 1)) {
+				array[i][j].state = HARD_WALL;
 			}
 		}
-		array[0][0] = SOFT_WALL;
+	}
 
-		for (int i = 0; i < SIZE_ROW; i++) {
-			for (int j = 0; j < SIZE_COL; j++) {
-				if (i == 0 || i == (SIZE_ROW - 1)) {
-					array[i][j] = HARD_WALL; // grey stones top and bottom
+	// left boundary hardwalls
+	for (int i = 1; i < SIZE_ROW - 1; i++) {
+		for (int j = 0; j < SIZE_COL; j++) {
+			if (j == 0 || j == (SIZE_COL - 1)) {
+				array[i][j].state = HARD_WALL;
+			}
+		}
+	}
+
+	// alternating hardwalls
+	for (int i = 1; i < SIZE_ROW - 2; i++) {
+		for (int j = 1; j < SIZE_COL - 2; j++) {
+			if (i % 2 == 0 && j % 2 == 0) {
+				array[i][j].state = HARD_WALL;
+			}
+			else {
+				array[i][j].state = EMPTY_CELL;
+			}
+		}
+	}
+
+	// generating the softwalls aka brown tiles
+	srand(static_cast<unsigned int> (time(NULL)));
+	for (int i = 1; i < SIZE_ROW - 1; i++) {
+		for (int j = 1; j < SIZE_COL - 1; j++) {
+			if (array[i][j].state != HARD_WALL) {
+				if (int randcount = rand() % 2) {
+					array[i][j].state = SOFT_WALL;
 				}
 			}
 		}
 
-		for (int i = 1; i < SIZE_ROW-1; i++) {
-			for (int j = 0; j < SIZE_COL; j++) {
-				if (j == 0 || j == (SIZE_COL - 1)) {
-					array[i][j] = HARD_WALL; // grey stones left and right
-				}
-			}
-		}
+	}
 
-		for (int i = 1; i < SIZE_ROW-2 ; i++) {
-			for (int j = 1; j < SIZE_COL-2 ; j++) {
-				if (i % 2 == 0 && j % 2 == 0) {
-					array[i][j] = HARD_WALL; //alternating grey stones
+	for (int i = 1; i < SIZE_ROW - 1; i++) {
+		for (int j = 1; j < SIZE_COL - 1; j++) {
+			if (array[i][j].state == SOFT_WALL) {
+				int randcount2 = rand() % 2;
+				if (randcount2 == 0) {
+					array[i][j].state = DISINTEGRATING_WALL;
 				}
 				else {
-					array[i][j] = EMPTY_CELL;
+					array[i][j].state = SOFT_WALL;
 				}
-			} 
+
+			}
 		}
-		array[1][3] = SOFT_WALL;
-		array[2][3] = SOFT_WALL;
-		array[3][3] = SOFT_WALL;
-		array[3][2] = SOFT_WALL;
-		array[3][1] = SOFT_WALL;
-		 
+
+	}
+
+	float disintegrationTimers[SIZE_ROW][SIZE_COL]={};
+	// Initialize the disintegration timers
+	for (int i = 0; i < SIZE_ROW; i++) {
+		for (int j = 0; j < SIZE_COL; j++) {
+			disintegrationTimers[i][j] = 0.0f;
+		}
+	}
+
+
+
+
+
+
 	// We inform Alpha Engine that we are going to create a mesh
 	AEGfxMeshStart();
 
@@ -95,9 +149,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// Saving the mesh (list of triangles) in pMesh
 	AEGfxVertexList* pMesh = AEGfxMeshEnd();
-	//AEGfxTexture* pTex = AEGfxTextureLoad("Assets/fixed-tiles.png");
-	AEGfxTexture* pBombTex = AEGfxTextureLoad("Assets/bomb01.png");
-	AEGfxTexture* pPlayerTex = AEGfxTextureLoad("Assets/farmer.png");
+
+	// Load the Texture of the fixed tiles
+	AEGfxTexture* pFixedTiles = AEGfxTextureLoad("Assets/fixed-tiles.png");
+	AEGfxTexture* pBreakables = AEGfxTextureLoad("Assets/Breakables.png");
+	AEGfxTexture* pGrass = AEGfxTextureLoad("Assets/grass.png");
+	AEGfxTexture* pPlayerTex = AEGfxTextureLoad("Assets/farmer3d.png");
 
 
 	// Create a scale matrix that scales by 500 x and y
@@ -110,7 +167,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	AEMtx33 transform[SIZE_ROW][SIZE_COL] = { 0 };
 	AEMtx33 transform_player = { 0 };
 
-	
 	// create the grids
 	for (int i = 0; i < SIZE_ROW; i++) {
 		yaxis -= static_cast <f32>(CEll_HEIGHT + CEll_BUF);
@@ -123,6 +179,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		xaxis = -((PLAY_AREA_WIDTH + CEll_HEIGHT + CEll_BUF) / 2);
 	}
+
 
 
 
@@ -147,31 +204,90 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		// the vertices of the mesh that we are about to choose to draw in the next line.
 		for (int i = 0; i < SIZE_ROW; i++) {
 			for (int j = 0; j < SIZE_COL; j++) {
-				if (array[i][j] == HARD_WALL) {
-					AEGfxSetColorToAdd(-0.56f, -0.56f, -0.56f, 0.0f); //grey
+				AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+				AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+				AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+				AEGfxSetTransparency(1.0f);
+				if (array[i][j].state == HARD_WALL) {
+					
+					
+					AEGfxTextureSet(pFixedTiles, 0, 0);
+					//AEGfxSetColorToAdd(-0.56f, -0.56f, -0.56f, 0.0f); //grey
 
 				}
-				else if (array[i][j] == EMPTY_CELL) {
-					AEGfxSetColorToAdd(-0.74f, -0.44f, -0.96f, 0.0f); //green
+				else if (array[i][j].state == EMPTY_CELL) {
+					
+					AEGfxTextureSet(pGrass, 0, 0);
+
+					//AEGfxSetColorToAdd(-0.74f, -0.44f, -0.96f, 0.0f); //green
 
 				}
-				else if (array[i][j] == SOFT_WALL) {
-					AEGfxSetColorToAdd(-0.27f, -0.48f, -0.78f, 0.0f);//#B87333 brown
+				else if (array[i][j].state == SOFT_WALL) {
+
+					AEGfxTextureSet(pBreakables, 0, 0);
+					//AEGfxSetColorToAdd(-0.27f, -0.48f, -0.78f, 0.0f);//#B87333 brown
 
 
 				}
+				else if (array[i][j].state == DISINTEGRATING_WALL) {
+
+					AEGfxTextureSet(pBreakables, 0, 0);
+					//AEGfxSetColorToAdd(-0.33f, -0.44f, -0.20f, 0.0f);//lilac
+				}
+
+				//draw_hardwall(pMesh, pPlayerTex, transform[i][j]);
 				AEGfxSetTransform(transform[i][j].m);
 				AEGfxMeshDraw(pMesh, AE_GFX_MDM_TRIANGLES);
 
 			}
 		}
 
-		// call bomb function
-		isbomb(pMesh, pBombTex, transform);
 
-		//call player function
-		player(pMesh, pPlayerTex, transform_player);
-		player2 = playermovement(collision.collisionresult);
+		bool previousDisintegrated{ true };
+		// Update the disintegration process
+		for (int i = 1; i < SIZE_ROW - 1; i++) {
+			for (int j = 1; j < SIZE_COL - 1; j++) {
+
+				// Inside the loop
+				if (array[i][j].state == DISINTEGRATING_WALL) {
+					if (previousDisintegrated == true) {
+						disintegrationTimers[i][j] += static_cast<float> (AEFrameRateControllerGetFrameTime());
+						printf("Timer[%d][%d]: %f\n", i, j, disintegrationTimers[i][j]);  // Debugging output
+						if (disintegrationTimers[i][j] > 3.0f) {
+							array[i][j].state = EMPTY_CELL;
+							printf("Cell[%d][%d] Disintegrated!\n", i, j);  // Debugging output
+							disintegrationTimers[i][j] = 0.0f;
+						}
+
+					}
+					previousDisintegrated = (array[i][j].state == EMPTY_CELL);
+
+				}
+
+
+				/*if (array[i][j].state == DISINTEGRATING_WALL) {
+					// Check if the previous cell was a disintegrating cell that has turned into an empty cell
+					bool previousDisintegrated = (array[i - 1][j].state == !DISINTEGRATING_WALL);
+
+					// If the previous cell has disintegrated, proceed with the current cell
+					if (previousDisintegrated) {
+						array[i][j].disintegrationTimer += AEFrameRateControllerGetFrameTime();
+
+
+						if (array[i - 1][j].disintegrationTimer > 20.0f) {
+							array[i][j].state = EMPTY_CELL;
+							printf("Timer[%d][%d]: %f\n", i, j, disintegrationTimers[i][j]);
+							array[i - 1][j].disintegrationTimer = 0.0f;
+							printf("Cell[%d][%d] Disintegrated!\n", i, j);  // Debugging output
+						}
+					}
+				}*/
+
+
+			}
+		}
+		player(pMesh, pPlayerTex, transform_player, player2);
+		player2 = playermovement(collision.collisionresult, player2);
 		//find array position from the player position
 		//arrayNum 
 		//std::cout << player2.x <<std::endl;
@@ -185,26 +301,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		//int nextXGrid = (int)(player2.veloX / (CEll_HEIGHT + CEll_BUF));
 		//int nextYGrid = (int)(PLAY_AREA_HEIGHT -  player2.veloY) / (CEll_HEIGHT + CEll_BUF);
 
-		int currentXGrid = (int)((player2.x + PLAY_AREA_WIDTH / 2) / (CEll_HEIGHT + CEll_BUF))-1;
-		std::cout << "Player2 X" << player2.x << std::endl;
+		int currentXGrid = static_cast<int>((player2.x + PLAY_AREA_WIDTH/2) / (CEll_HEIGHT + CEll_BUF));
+		std::cout << "Player2 X" << (player2.x + PLAY_AREA_WIDTH / 2) << std::endl;
 		std::cout << "current X" << currentXGrid << std::endl;
-		int currentYGrid = (int)(PLAY_AREA_HEIGHT/2 -player2.y) / (CEll_HEIGHT + CEll_BUF)-1;
-		std::cout << "current Y" << currentYGrid << std::endl;
-		int nextXGrid = (int)((player2.veloX+PLAY_AREA_WIDTH/2) / (CEll_HEIGHT + CEll_BUF))-1;
-		int nextYGrid = (int)(PLAY_AREA_HEIGHT/2 - player2.veloY) / (CEll_HEIGHT + CEll_BUF)-1;
+		int currentYGrid = static_cast<int>((-player2.y + PLAY_AREA_HEIGHT/2) / (CEll_HEIGHT + CEll_BUF));
+		std::cout << "current Y" << currentYGrid << std::endl << std::endl;
+		int nextXGrid = static_cast<int>((player2.veloX + PLAY_AREA_WIDTH/2) / (CEll_HEIGHT + CEll_BUF));
 		std::cout << "next X" << nextXGrid << std::endl;
+		int nextYGrid = static_cast<int>((-player2.veloY + PLAY_AREA_HEIGHT/2) / (CEll_HEIGHT + CEll_BUF));
 		std::cout << "next Y" << nextYGrid << std::endl;
-
 		// find the array value
-		// call collision function
-		// this gets the result for whether the next cell the player is heading towards and the player should collide
-		collision = collisionResult(array[nextYGrid][nextXGrid], PLAYER, collision); 
-		// this updates the result for whether the next cell the player is heading towards and the player should collide
-		collision = collide(array[nextYGrid][nextXGrid], array[currentYGrid][currentXGrid], player2.veloX, player2.veloY, player2.x, player2.y, collision.collisionresult, collision);
 		
-		// check for the 4 boxes around the player
-		// array[numBoxY - 1][numBoxX] + array[numBoxY - 1][numBoxX - 1] + array[numBoxY - 1][numBoxX + 1] + array[numBoxY][numBoxX + 1] + array[numBoxY][numBoxX - 1] + array[numBoxY + 1][numBoxX + 1] + array[numBoxY + 1][numBoxX - 1] + array[numBoxY + 1][numBoxX]
 
+		//call collision function
+		collision = collisionResult(array[nextXGrid][nextYGrid].state, PLAYER, collision);
+		collision = collide(array[nextXGrid][nextYGrid].state, PLAYER, player2, collision.collisionresult, collision);
 		
 		// Informing the system about the loop's end
 		AESysFrameEnd();
@@ -214,11 +325,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			gGameRunning = 0;
 	}
 
-	// free everything
 	AEGfxMeshFree(pMesh);
-	AEGfxDestroyFont(pFont);
-	AEGfxTextureUnload(pBombTex);
 	AEGfxTextureUnload(pPlayerTex);
+	//AEGfxDestroyFont(pFont);
 
 
 	// free the system
