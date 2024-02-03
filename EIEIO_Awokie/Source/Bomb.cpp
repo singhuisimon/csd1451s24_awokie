@@ -32,7 +32,6 @@ void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE
 	//bomb_array[bombstate][7][7] = 1;
 	// testing code ends here-----------------------------
 
-	
 
 	// Create a scale matrix that scales by 500 x and y
 	AEMtx33 scale = { 0 };

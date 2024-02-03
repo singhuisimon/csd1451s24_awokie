@@ -57,18 +57,34 @@ PlayerStruct playermovement()
 	if (AEInputCheckCurr(AEVK_W))
 	{
 		player2.y += 5;
+<<<<<<< HEAD
+=======
+		player2.veloY = player2.y + 5;
+>>>>>>> main
 	}
 	if (AEInputCheckCurr(AEVK_S))
 	{
 		player2.y -= 5;
+<<<<<<< HEAD
+=======
+		player2.veloY = player2.y -5;
+>>>>>>> main
 	}
 	if (AEInputCheckCurr(AEVK_D))
 	{
 		player2.x += 5;
+<<<<<<< HEAD
+=======
+		player2.veloX = player2.x + 5;
+>>>>>>> main
 	}
 	if (AEInputCheckCurr(AEVK_A))
 	{
 		player2.x -= 5;
+<<<<<<< HEAD
+=======
+		player2.veloX = player2.x-5;
+>>>>>>> main
 	}
 	return player2;
 }

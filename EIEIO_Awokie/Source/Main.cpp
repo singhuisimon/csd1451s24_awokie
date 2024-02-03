@@ -174,10 +174,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		//find array position from the player position
 		//arrayNum 
 		std::cout << player2.x <<std::endl;
+<<<<<<< HEAD
 
 		// find the array value
 		//call collision function
 		int result = collisionResult(HARD_WALL, PLAYER);
+=======
+		int currentXGrid = player2.x / (CEll_HEIGHT+ CEll_BUF);
+		int currentYGrid = (PLAY_AREA_HEIGHT - player2.y) / (CEll_HEIGHT + CEll_BUF);
+		int nextXGrid = player2.veloX / (CEll_HEIGHT + CEll_BUF);
+		int nextYGrid = (PLAY_AREA_HEIGHT - player2.veloY) / (CEll_HEIGHT + CEll_BUF);
+
+		// find the array value
+		//call collision function
+		int result = collisionResult(array[nextXGrid][nextYGrid], array[currentXGrid][currentYGrid]);
+>>>>>>> main
 		
 		collide(HARD_WALL, PLAYER, 5,6,34,78, result);
 
