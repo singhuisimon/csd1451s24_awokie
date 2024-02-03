@@ -1,6 +1,6 @@
 #pragma once
 enum objectId {
-	EMPTY_CELL = 0,						// 0 Empty cell so that the user passes through. 
+	EMPTY_CELL = 0,						// 0 Empty cell - Green Grass so that the user passes through. 
 	SOFT_WALL,							// 1 Soft Wall - cannot be passed through but can be destroyed.
 	HARD_WALL,							// 2 Hard Wall - cannot pass through, cannot be destroyed
 	DISINTEGRATING_WALL,				// 3 Disappearing Wall - cannot pass through unless the wall is destroyed or destroys itself

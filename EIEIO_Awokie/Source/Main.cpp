@@ -1,11 +1,13 @@
 
 
 #include <crtdbg.h> // To check for memory leaks
-#include "AEEngine.h"
-#include <iostream>
 #include "Bomb.h"
 #include "Initialisation.h"
 #include "player.h"
+#include "enum.h"
+#include "collision.h"
+#include "AEEngine.h"
+#include <iostream>
 
 
 
@@ -23,9 +25,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	int gGameRunning = 1;
 
 	// Initialization of your own variables go here
-
+	PlayerStruct player2;
 	// Using custom window procedure
-	AESysInit(hInstance, nCmdShow, PLAY_AREA_WIDTH, PLAY_AREA_HEIGHT, 0, 60, true, NULL);
+	AESysInit(hInstance, nCmdShow, PLAY_AREA_WIDTH, PLAY_AREA_HEIGHT, 1, 60, true, NULL);
 
 	// Changing the window title
 	AESysSetWindowTitle("EIEIO");
@@ -36,22 +38,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	f32 xaxis = -((PLAY_AREA_WIDTH + CEll_HEIGHT + CEll_BUF) /2);
 	f32 yaxis = ((PLAY_AREA_HEIGHT-100 + CEll_HEIGHT + CEll_BUF) / 2);
 	s8 pFont = AEGfxCreateFont("Assets/liberation-mono.ttf", 72);
-	int cell_fixed = 2; // grey stones
-	int cell_alive = 1; // brown barrel
-	int cell_dead = 0; // green grass
 	int array[SIZE_ROW][SIZE_COL];
 
 		for (int i = 0; i < SIZE_ROW; i++) {
 			for (int j = 0; j < SIZE_COL; j++) {
-				array[i][j] = cell_dead; // the green grass
+				array[i][j] = EMPTY_CELL; // the green grass
 			}
 		}
-		array[0][0] = cell_alive;
+		array[0][0] = SOFT_WALL;
 
 		for (int i = 0; i < SIZE_ROW; i++) {
 			for (int j = 0; j < SIZE_COL; j++) {
 				if (i == 0 || i == (SIZE_ROW - 1)) {
-					array[i][j] = cell_fixed; // grey stones top and bottom
+					array[i][j] = HARD_WALL; // grey stones top and bottom
 				}
 			}
 		}
@@ -59,7 +58,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		for (int i = 1; i < SIZE_ROW-1; i++) {
 			for (int j = 0; j < SIZE_COL; j++) {
 				if (j == 0 || j == (SIZE_COL - 1)) {
-					array[i][j] = cell_fixed; // grey stones left and right
+					array[i][j] = HARD_WALL; // grey stones left and right
 				}
 			}
 		}
@@ -67,18 +66,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		for (int i = 1; i < SIZE_ROW-2 ; i++) {
 			for (int j = 1; j < SIZE_COL-2 ; j++) {
 				if (i % 2 == 0 && j % 2 == 0) {
-					array[i][j] = cell_fixed; //alternating grey stones
+					array[i][j] = HARD_WALL; //alternating grey stones
 				}
 				else {
-					array[i][j] = cell_dead;
+					array[i][j] = EMPTY_CELL;
 				}
-			}
+			} 
 		}
-		array[1][3] = cell_alive;
-		array[2][3] = cell_alive;
-		array[3][3] = cell_alive;
-		array[3][2] = cell_alive;
-		array[3][1] = cell_alive;
+		array[1][3] = SOFT_WALL;
+		array[2][3] = SOFT_WALL;
+		array[3][3] = SOFT_WALL;
+		array[3][2] = SOFT_WALL;
+		array[3][1] = SOFT_WALL;
 		 
 	// We inform Alpha Engine that we are going to create a mesh
 	AEGfxMeshStart();
@@ -95,7 +94,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// Saving the mesh (list of triangles) in pMesh
 	AEGfxVertexList* pMesh = AEGfxMeshEnd();
-	AEGfxTexture* pTex = AEGfxTextureLoad("Assets/fixed-tiles.png");
+	//AEGfxTexture* pTex = AEGfxTextureLoad("Assets/fixed-tiles.png");
 	AEGfxTexture* pBombTex = AEGfxTextureLoad("Assets/bomb01.png");
 	AEGfxTexture* pPlayerTex = AEGfxTextureLoad("Assets/farmer.png");
 
@@ -147,15 +146,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		// the vertices of the mesh that we are about to choose to draw in the next line.
 		for (int i = 0; i < SIZE_ROW; i++) {
 			for (int j = 0; j < SIZE_COL; j++) {
-				if (array[i][j] == cell_fixed) {
+				if (array[i][j] == HARD_WALL) {
 					AEGfxSetColorToAdd(-0.56f, -0.56f, -0.56f, 0.0f); //grey
 
 				}
-				else if (array[i][j] == cell_dead) {
+				else if (array[i][j] == EMPTY_CELL) {
 					AEGfxSetColorToAdd(-0.74f, -0.44f, -0.96f, 0.0f); //green
 
 				}
-				else if (array[i][j] == cell_alive) {
+				else if (array[i][j] == SOFT_WALL) {
 					AEGfxSetColorToAdd(-0.27f, -0.48f, -0.78f, 0.0f);//#B87333 brown
 
 
@@ -171,10 +170,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		//call player function
 		player(pMesh, pPlayerTex, transform_player);
-		playermovement();
+		player2 = playermovement();
+		//find array position from the player position
+		//arrayNum 
+		std::cout << player2.x <<std::endl;
 
+		// find the array value
 		//call collision function
-		collisionResult(EMPTY_CELL, PLAYER);
+		int result = collisionResult(HARD_WALL, PLAYER);
+		
+		collide(HARD_WALL, PLAYER, 5,6,34,78, result);
 
 		// Informing the system about the loop's end
 		AESysFrameEnd();

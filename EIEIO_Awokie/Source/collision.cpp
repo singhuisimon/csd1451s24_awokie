@@ -1,5 +1,4 @@
 #include "collision.h"
-#include "enum.h"
 #include <iostream>
 //collilde()
 
@@ -7,6 +6,22 @@
 //time t of collision
 //SET END POSITION OR RETURN IT
 //SUGGESTED TO NOT DO THE VELOCITY CHECKS HERE
+struct position {
+	int x;
+	int y;
+}finalPosition;
+
+struct velocity {
+	int x; //speed and direction of the object, Positive is to the right Negative is to the left
+	int y; //speed and direction of the object, Positive is to the right Negative is to the left
+} moveVelocity;
+
+struct allCollision {
+	position finalPosition;
+	velocity moveVelocity;
+	int collisionResult;
+
+};
 
 int collisionResult(int objectId, int objectId2) {
 	switch (objectId) {
@@ -349,10 +364,20 @@ int collisionResult(int objectId, int objectId2) {
 			
 	}
 	return 1;
-	
-
 }
 
+// Check if there is collision within the same frame.
+int collide(int stationaryId, int movingId, int xVelo, int yVelo, int xPos2, int yPos2, int result) {
+	if (result == STOP) {
+		std::cout << "STOP";
+		return 3;
+	}
+	if (result == PASS) {
+		std::cout << "PASS";
+		return 9;
+	}
+	return 1;
+}
 //btw 2 squares;
 //find min dist
 //dFirst = a.min.x - b.max.x;
