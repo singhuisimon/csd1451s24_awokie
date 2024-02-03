@@ -2,13 +2,12 @@
 
 #include <crtdbg.h> // To check for memory leaks
 #include "Bomb.h"
+#include "collision.h"
 #include "Initialisation.h"
 #include "player.h"
 #include "enum.h"
-#include "collision.h"
 #include "AEEngine.h"
 #include <iostream>
-
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -26,6 +25,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// Initialization of your own variables go here
 	PlayerStruct player2;
+	allcollision collision;
+
 	// Using custom window procedure
 	AESysInit(hInstance, nCmdShow, PLAY_AREA_WIDTH, PLAY_AREA_HEIGHT, 1, 60, true, NULL);
 
@@ -170,27 +171,33 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		//call player function
 		player(pMesh, pPlayerTex, transform_player);
-		player2 = playermovement();
+		player2 = playermovement(collision.collisionresult);
 		//find array position from the player position
 		//arrayNum 
-		std::cout << player2.x <<std::endl;
-<<<<<<< HEAD
+		//std::cout << player2.x <<std::endl;
 
 		// find the array value
 		//call collision function
-		int result = collisionResult(HARD_WALL, PLAYER);
-=======
-		int currentXGrid = player2.x / (CEll_HEIGHT+ CEll_BUF);
-		int currentYGrid = (PLAY_AREA_HEIGHT - player2.y) / (CEll_HEIGHT + CEll_BUF);
-		int nextXGrid = player2.veloX / (CEll_HEIGHT + CEll_BUF);
-		int nextYGrid = (PLAY_AREA_HEIGHT - player2.veloY) / (CEll_HEIGHT + CEll_BUF);
+		//int result = collisionResult(HARD_WALL, PLAYER);
 
+		//int currentXGrid = (int)(player2.x / (CEll_HEIGHT+ CEll_BUF));
+		//int currentYGrid = (int)(PLAY_AREA_HEIGHT - player2.y) / (CEll_HEIGHT + CEll_BUF);
+		//int nextXGrid = (int)(player2.veloX / (CEll_HEIGHT + CEll_BUF));
+		//int nextYGrid = (int)(PLAY_AREA_HEIGHT -  player2.veloY) / (CEll_HEIGHT + CEll_BUF);
+
+		int currentXGrid = (int)(player2.x / (CEll_HEIGHT + CEll_BUF));
+		std::cout << "Player2 X" << player2.x << std::endl;
+		std::cout << "current X" << currentXGrid << std::endl;
+		int currentYGrid = (int)(player2.y) / (CEll_HEIGHT + CEll_BUF);
+		std::cout << "current Y" << currentYGrid << std::endl;
+		int nextXGrid = (int)(player2.veloX / (CEll_HEIGHT + CEll_BUF));
+		
+		int nextYGrid = (int)(player2.veloY) / (CEll_HEIGHT + CEll_BUF);
+		std::cout << "grid Y" << nextYGrid << std::endl;
 		// find the array value
 		//call collision function
 		int result = collisionResult(array[nextXGrid][nextYGrid], array[currentXGrid][currentYGrid]);
->>>>>>> main
-		
-		collide(HARD_WALL, PLAYER, 5,6,34,78, result);
+		collision = collide(array[nextXGrid][nextYGrid], array[currentXGrid][currentYGrid], player2.veloX, player2.veloY, player2.x, player2.y, result, collision);
 
 		// Informing the system about the loop's end
 		AESysFrameEnd();

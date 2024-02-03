@@ -1,7 +1,5 @@
 #include <crtdbg.h> // To check for memory leaks
-#include "AEEngine.h"
 #include "player.h"
-#include "enum.h"
 
 
 //float player_x = 100.f;
@@ -52,40 +50,48 @@ void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player
 
 
 
-PlayerStruct playermovement()
+PlayerStruct playermovement(int collided)
 {
-	if (AEInputCheckCurr(AEVK_W))
-	{
-		player2.y += 5;
-<<<<<<< HEAD
-=======
-		player2.veloY = player2.y + 5;
->>>>>>> main
+	if (collided == PASS) {
+		if (AEInputCheckCurr(AEVK_W))
+		{
+			player2.y += 5;
+			player2.veloY = player2.y + 5;
+		}
+		if (AEInputCheckCurr(AEVK_S))
+		{
+			player2.y -= 5;
+			player2.veloY = player2.y - 5;
+		}
+		if (AEInputCheckCurr(AEVK_D))
+		{
+			player2.x += 5;
+			player2.veloX = player2.x + 5;
+		}
+		if (AEInputCheckCurr(AEVK_A))
+		{
+			player2.x -= 5;
+			player2.veloX = player2.x - 5;
+		}
+	}else if (collided == STOP){
+		if (AEInputCheckCurr(AEVK_W))
+		{
+			player2.veloY = player2.y + 5;
+		}
+		if (AEInputCheckCurr(AEVK_S))
+		{
+			player2.veloY = player2.y - 5;
+		}
+		if (AEInputCheckCurr(AEVK_D))
+		{
+			player2.veloX = player2.x + 5;
+		}
+		if (AEInputCheckCurr(AEVK_A))
+		{
+			player2.veloX = player2.x - 5;
+		}
 	}
-	if (AEInputCheckCurr(AEVK_S))
-	{
-		player2.y -= 5;
-<<<<<<< HEAD
-=======
-		player2.veloY = player2.y -5;
->>>>>>> main
-	}
-	if (AEInputCheckCurr(AEVK_D))
-	{
-		player2.x += 5;
-<<<<<<< HEAD
-=======
-		player2.veloX = player2.x + 5;
->>>>>>> main
-	}
-	if (AEInputCheckCurr(AEVK_A))
-	{
-		player2.x -= 5;
-<<<<<<< HEAD
-=======
-		player2.veloX = player2.x-5;
->>>>>>> main
-	}
+	
 	return player2;
 }
 
