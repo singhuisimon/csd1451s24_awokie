@@ -11,10 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\collision.cpp" />
+    <ClCompile Include="Source\player.cpp" />
     <ClCompile Include="Source\Bomb.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\collision.h" />
+    <ClInclude Include="Source\enum.h" />
+    <ClInclude Include="Source\player.h" />
     <ClInclude Include="Source\Bomb.h" />
     <ClInclude Include="Source\Initialisation.h" />
   </ItemGroup>
