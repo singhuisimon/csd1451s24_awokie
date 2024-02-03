@@ -11,6 +11,7 @@
 #include <stdlib.h>   
 #include <time.h>
 #include "player.h"
+#include "Sheep.h"
 
 // without texture, multiple sprite, keypress, pause state
 
@@ -87,7 +88,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 
 		// generating the softwalls aka brown tiles
-		srand(time(NULL));
+		srand(static_cast<unsigned int>(time(NULL)));
 		for (int i = 1; i < SIZE_ROW - 1; i++) {
 			for (int j = 1; j < SIZE_COL-1; j++) {
 				if (array[i][j].state != HARD_WALL ) {
@@ -115,11 +116,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		}
 
-		float disintegrationTimers[SIZE_ROW][SIZE_COL];
+		f64 disintegrationTimers[SIZE_ROW][SIZE_COL];
 		// Initialize the disintegration timers
 		for (int i = 0; i < SIZE_ROW; i++) {
 			for (int j = 0; j < SIZE_COL; j++) {
-				disintegrationTimers[i][j] = 0.0f;
+				disintegrationTimers[i][j] = 0.f;
 			}
 		}
 
@@ -148,6 +149,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	AEGfxTexture* pFixedTiles = AEGfxTextureLoad("Assets/fixed-tiles.png");
 	AEGfxTexture* pBreakables = AEGfxTextureLoad("Assets/Breakables.png");
 	AEGfxTexture* pGrass = AEGfxTextureLoad("Assets/grass.png");
+	AEGfxTexture* pSheep = AEGfxTextureLoad("Assets/Sheep.png");
 	AEGfxTexture* pPlayerTex = AEGfxTextureLoad("Assets/farmer3d.png");
 
 
@@ -160,6 +162,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	AEMtx33 translate = { 0 };
 	AEMtx33 transform[SIZE_ROW][SIZE_COL] = { 0 };
 	AEMtx33 transform_player = { 0 };
+	AEMtx33 transform_sheep = { 0 };
 	
 	// create the grids
 	for (int i = 0; i < SIZE_ROW; i++) {
@@ -257,7 +260,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 						if (disintegrationTimers[i][j] > 3.0f) {
 							array[i][j].state = EMPTY_CELL;
 							printf("Cell[%d][%d] Disintegrated!\n", i, j);  // Debugging output
-							disintegrationTimers[i][j] = 0.0f;
+							disintegrationTimers[i][j] = 0.0;
 						}
 						
 					}
@@ -287,6 +290,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				
 			}
 		}
+		sheep(pMesh, pSheep, transform_player);
 		player(pMesh, pPlayerTex, transform_player);
 		player2 = playermovement(collision.collisionresult);
 		//find array position from the player position
@@ -302,14 +306,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		//int nextXGrid = (int)(player2.veloX / (CEll_HEIGHT + CEll_BUF));
 		//int nextYGrid = (int)(PLAY_AREA_HEIGHT -  player2.veloY) / (CEll_HEIGHT + CEll_BUF);
 
-		int currentXGrid = (int)(player2.x / (CEll_HEIGHT + CEll_BUF));
+		int currentXGrid = static_cast<int>(player2.x / (CEll_HEIGHT + CEll_BUF));
 		std::cout << "Player2 X" << player2.x << std::endl;
 		std::cout << "current X" << currentXGrid << std::endl;
-		int currentYGrid = (int)(player2.y) / (CEll_HEIGHT + CEll_BUF);
+		int currentYGrid = static_cast<int>(player2.y) / (CEll_HEIGHT + CEll_BUF);
 		std::cout << "current Y" << currentYGrid << std::endl;
-		int nextXGrid = (int)(player2.veloX / (CEll_HEIGHT + CEll_BUF));
+		int nextXGrid = static_cast<int>(player2.veloX / (CEll_HEIGHT + CEll_BUF));
 
-		int nextYGrid = (int)(player2.veloY) / (CEll_HEIGHT + CEll_BUF);
+		int nextYGrid = static_cast<int>(player2.veloY) / (CEll_HEIGHT + CEll_BUF);
 		std::cout << "grid Y" << nextYGrid << std::endl;
 		// find the array value
 		//call collision function
@@ -320,11 +324,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		// check if forcing the application to quit
 		if (AEInputCheckTriggered(AEVK_ESCAPE) || 0 == AESysDoesWindowExist())
-			gGameRunning = 0;\
+			gGameRunning = 0;
 	}
 
 	AEGfxMeshFree(pMesh);
 	AEGfxTextureUnload(pPlayerTex);
+	AEGfxTextureUnload(pFixedTiles);
+	AEGfxTextureUnload(pGrass);
+	AEGfxTextureUnload(pSheep);
 	//AEGfxDestroyFont(pFont);
 
 
