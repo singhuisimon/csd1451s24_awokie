@@ -1,13 +1,17 @@
 #include <crtdbg.h> // To check for memory leaks
 #include "AEEngine.h"
 #include "player.h"
-#include "Initialisation.h"
+#include "enum.h"
 
-float player_x = 100.f;
-float player_y = -175.f;
+
+//float player_x = 100.f;
+//float player_y = -175.f;
+
+PlayerStruct player2;
 
 void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player)
 {
+	
 	// Create a scale matrix that scales by 500 x and y
 	AEMtx33 scale = { 0 };
 	AEMtx33Scale(&scale, CEll_HEIGHT, CEll_HEIGHT);
@@ -21,7 +25,7 @@ void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player
 	// Create a translation matrix that translates by
 	// 200 in the x-axis and 100 in the y-axis
 	AEMtx33 translate = { 0 };
-	AEMtx33Trans(&translate, player_x, player_y);
+	AEMtx33Trans(&translate, player2.x, player2.y);
 
 
 	AEMtx33Concat(&transform_player, &rotate, &scale);
@@ -48,16 +52,24 @@ void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player
 
 
 
-void playermovement()
+PlayerStruct playermovement()
 {
 	if (AEInputCheckCurr(AEVK_W))
 	{
-		player_y += 5;
+		player2.y += 5;
 	}
 	if (AEInputCheckCurr(AEVK_S))
 	{
-		player_y -= 5;
+		player2.y -= 5;
 	}
-
+	if (AEInputCheckCurr(AEVK_D))
+	{
+		player2.x += 5;
+	}
+	if (AEInputCheckCurr(AEVK_A))
+	{
+		player2.x -= 5;
+	}
+	return player2;
 }
 
