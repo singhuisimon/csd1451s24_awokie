@@ -8,3 +8,5 @@
 #define CEll_HEIGHT 47.5f
 #define CEll_BUF 2.5f
 
+// Maximum number of bombs
+#define MAX_BOMBS 10
