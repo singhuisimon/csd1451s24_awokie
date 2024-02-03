@@ -152,6 +152,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// Load the Texture of the fixed tiles
 	AEGfxTexture* pFixedTiles = AEGfxTextureLoad("Assets/fixed-tiles.png");
+	AEGfxTexture* pBombTex = AEGfxTextureLoad("Assets/bomb01.png");
 	AEGfxTexture* pBreakables = AEGfxTextureLoad("Assets/Breakables.png");
 	AEGfxTexture* pGrass = AEGfxTextureLoad("Assets/grass.png");
 	AEGfxTexture* pPlayerTex = AEGfxTextureLoad("Assets/farmer3d.png");
@@ -243,7 +244,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 
 		// call bomb function
-		isbomb(pMesh, pBombTex, transform, array);
+		isbomb(pMesh, pBombTex, transform, array, player2);
 
 		bool previousDisintegrated{ true };
 		// Update the disintegration process

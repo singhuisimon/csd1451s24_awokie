@@ -442,7 +442,7 @@ allcollision collisionResult(int objectId, int objectId2, allcollision collision
 allcollision collide(int stationaryId, int movingId, PlayerStruct player, int result, allcollision collisionData) {
 	if (result == STOP) {
 		std::cout << "STOP" << std::endl;
-		collisionData.collisionresult = STOP;
+		collisionData.collisionresult = PASS;
 		return collisionData;
 	}
 	else if (result == PASS) {
