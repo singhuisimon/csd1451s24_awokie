@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AEEngine.h"
 #include "Initialisation.h"
 #include "enum.h"
 
@@ -11,5 +12,7 @@ struct PlayerStruct {
 	float y;*/
 	float x = 100.f;
 	float y = -175.f;
+	float veloX = 0;
+	float veloY = 0;
 };
 PlayerStruct playermovement();
