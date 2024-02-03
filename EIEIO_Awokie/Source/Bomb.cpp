@@ -7,37 +7,25 @@
 #include "Initialisation.h"
 
 // initialising
+
 // bomb state
 int bomb = 0;
 float totaltime[SIZE_ROW][SIZE_COL] = { 0.0f };
-//float time{ 0 };
-
-// place bomb array
-int index_row = 0;
-int index_col = 0;
 bool bomb_array[SIZE_ROW][SIZE_COL]{ 0 };
-bool previousbombplaced;
-
-// bomb struct
-//struct bomb {
-	//int bombID;
-//float bombTime;
-//};
-
-// bomb timer array
-//struct bomb bombs[MAX_BOMBS];
 
 // mouse
 s32 pX = 0;
 s32 pY = 0;
+int index_row = 0;
+int index_col = 0;
 
-// mouse position axis
+// point 0,0 of screen
 f32 xaxis = -((PLAY_AREA_WIDTH + CEll_HEIGHT + CEll_BUF) / 2);
 f32 yaxis = ((PLAY_AREA_HEIGHT - 100 + CEll_HEIGHT + CEll_BUF) / 2);
 
 
 void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE_COL]) {
-	
+
 
 	// testing only to be deleted------------------------
 	//bomb_array[bombstate][2][2] = 1;
@@ -63,12 +51,11 @@ void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE
 		index_row = (pY - CEll_HEIGHT / 1.2) / (CEll_HEIGHT + CEll_BUF);
 		bomb_array[index_row][index_col] = !bomb_array[index_row][index_col];
 	}
-	
+
 
 	for (int i = 0; i < SIZE_ROW; i++) {
 		for (int j = 0; j < SIZE_COL; j++) {
 			if (bomb_array[i][j] == 1) {
-				previousbombplaced == true;
 				// draw the bomb
 				// tell the Alpha Engine to get ready to draw something with texture.
 				AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
@@ -88,62 +75,22 @@ void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE
 				AEGfxSetTransform(transform[i][j].m);
 				AEGfxMeshDraw(pMesh, AE_GFX_MDM_TRIANGLES);
 
-
 			} // endif bomb array
 		} // end j iteration
 	} // end i iteration
 
-
-	/*
-	if (bomb_array[index_row][index_col] == 1) {
-
-		// this part is for timer for bomb to tick off - 3sec
-		totaltime += AEFrameRateControllerGetFrameTime();
-		if (totaltime > 2.0f) {
-			bomb_array[index_row][index_col] = 0;
-			totaltime = 0.f;
-		}
-	}
-	
-	
-	
-	
-
-	// Initialize the bomb array
-
-	for (int i = 0; i < MAX_BOMBS; ++i) {
-		if (bomb_array[index_row][index_col] == 1) {
-			bombs[i].bombTime += AEFrameRateControllerGetFrameTime();
-		}
-	}
-
-	// Check if any bomb's timer is greater than or equal to 2.0f
-	for (int i = 0; i < MAX_BOMBS; ++i) {
-		if (bombs[i].bombTime >= 2.0f) {
-			bomb_array[index_row][index_col] = 0;
-			bombs[i].bombTime = 0.0f; // Reset the timer for this bomb
-		}
-	}
-	*/
-
-
+	// timer for bomb to tick off
 	for (int i = 0; i < SIZE_ROW; i++) {
 		for (int j = 0; j < SIZE_COL; j++) {
 			if (bomb_array[i][j] == 1) {
-					totaltime[i][j] += AEFrameRateControllerGetFrameTime();
-					if (totaltime[i][j] > 2.0f) {
-						bomb_array[i][j] = 0;
-						totaltime[i][j] = 0.0f;
-					}
-	
-				
+				totaltime[i][j] += AEFrameRateControllerGetFrameTime();
+				if (totaltime[i][j] > 1.5f) {
+					bomb_array[i][j] = 0;
+					totaltime[i][j] = 0.0f;
+				}
 			}
 		}
-		
-
 	}
-	
-
 
 } // end void isbomb
 
