@@ -185,20 +185,27 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		//int nextXGrid = (int)(player2.veloX / (CEll_HEIGHT + CEll_BUF));
 		//int nextYGrid = (int)(PLAY_AREA_HEIGHT -  player2.veloY) / (CEll_HEIGHT + CEll_BUF);
 
-		int currentXGrid = (int)(player2.x / (CEll_HEIGHT + CEll_BUF));
+		int currentXGrid = (int)((player2.x + PLAY_AREA_WIDTH / 2) / (CEll_HEIGHT + CEll_BUF))-1;
 		std::cout << "Player2 X" << player2.x << std::endl;
 		std::cout << "current X" << currentXGrid << std::endl;
-		int currentYGrid = (int)(player2.y) / (CEll_HEIGHT + CEll_BUF);
+		int currentYGrid = (int)(PLAY_AREA_HEIGHT/2 -player2.y) / (CEll_HEIGHT + CEll_BUF)-1;
 		std::cout << "current Y" << currentYGrid << std::endl;
-		int nextXGrid = (int)(player2.veloX / (CEll_HEIGHT + CEll_BUF));
-		
-		int nextYGrid = (int)(player2.veloY) / (CEll_HEIGHT + CEll_BUF);
-		std::cout << "grid Y" << nextYGrid << std::endl;
-		// find the array value
-		//call collision function
-		int result = collisionResult(array[nextXGrid][nextYGrid], array[currentXGrid][currentYGrid]);
-		collision = collide(array[nextXGrid][nextYGrid], array[currentXGrid][currentYGrid], player2.veloX, player2.veloY, player2.x, player2.y, result, collision);
+		int nextXGrid = (int)((player2.veloX+PLAY_AREA_WIDTH/2) / (CEll_HEIGHT + CEll_BUF))-1;
+		int nextYGrid = (int)(PLAY_AREA_HEIGHT/2 - player2.veloY) / (CEll_HEIGHT + CEll_BUF)-1;
+		std::cout << "next X" << nextXGrid << std::endl;
+		std::cout << "next Y" << nextYGrid << std::endl;
 
+		// find the array value
+		// call collision function
+		// this gets the result for whether the next cell the player is heading towards and the player should collide
+		collision = collisionResult(array[nextYGrid][nextXGrid], PLAYER, collision); 
+		// this updates the result for whether the next cell the player is heading towards and the player should collide
+		collision = collide(array[nextYGrid][nextXGrid], array[currentYGrid][currentXGrid], player2.veloX, player2.veloY, player2.x, player2.y, collision.collisionresult, collision);
+		
+		// check for the 4 boxes around the player
+		// array[numBoxY - 1][numBoxX] + array[numBoxY - 1][numBoxX - 1] + array[numBoxY - 1][numBoxX + 1] + array[numBoxY][numBoxX + 1] + array[numBoxY][numBoxX - 1] + array[numBoxY + 1][numBoxX + 1] + array[numBoxY + 1][numBoxX - 1] + array[numBoxY + 1][numBoxX]
+
+		
 		// Informing the system about the loop's end
 		AESysFrameEnd();
 

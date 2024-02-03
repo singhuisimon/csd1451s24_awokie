@@ -23,39 +23,45 @@
 //
 //};
 
-int collisionResult(int objectId, int objectId2) {
+allcollision collisionResult(int objectId, int objectId2, allcollision collisionData) {
 	switch (objectId) {
 		case EMPTY_CELL: {
 			//return 
-			return PASS; 
+			collisionData.collisionresult = PASS;
+			return collisionData; 
 		}
 		case SOFT_WALL: {
 			//return 
 			switch (objectId2){
 				case PLAYER: {
 					//if collision statement
-					
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case WOLF: {
 					//if collision statement
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case SHEEP: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 					//or stop? //or new variable? 
 				}
 				case KEY:{
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case BOMB: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case EXPLOSION:{
-					return DESTROY;
+					collisionData.collisionresult = DESTROY;
+					return collisionData;
 				}
 				default: {
-					return -1;
+					return collisionData;
 				}
 			}
 			break;
@@ -64,28 +70,34 @@ int collisionResult(int objectId, int objectId2) {
 			switch (objectId2){
 				case PLAYER: {
 					//if collision statement
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case WOLF: {
 					//if collision statement
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case SHEEP: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case KEY:{
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case BOMB: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case EXPLOSION:{
-					return PASS;
+					//return PASS;
 					//or 
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				default: {
-					return -1;
+					return collisionData;
 				}
 			}
 			break;
@@ -94,28 +106,34 @@ int collisionResult(int objectId, int objectId2) {
 			switch (objectId2){
 				case PLAYER: {
 					//if collision statement
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case WOLF: {
 					//if collision statement
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case SHEEP: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case KEY:{
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case BOMB: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case EXPLOSION:{
-					return DESTROY;
+					//return DESTROY;
 					//or 
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				default: {
-					return -1;
+					return collisionData;
 				}
 			}
 			break;
@@ -126,31 +144,37 @@ int collisionResult(int objectId, int objectId2) {
 			case DOOR: {
 				//if collision statement
 				//if no key 
-				return STOP;
+				collisionData.collisionresult = STOP;
+				return collisionData;
 				// else if key and sheep
 				//return pass
 				//else return win code 4
 			}
 			case WOLF: {
 				//if collision statement
-				return STOP;
+				collisionData.collisionresult = STOP;
+				return collisionData;
 			}
 			case SHEEP: {
-				return STOP;
+				collisionData.collisionresult = STOP;
+				return collisionData;
 			}
 			case KEY: {
-				return STOP;
+				collisionData.collisionresult = STOP;
+				return collisionData;
 			}
 			case BOMB: {
-				return STOP;
+				collisionData.collisionresult = STOP;
+				return collisionData;
 			}
 			case EXPLOSION: {
-				return DESTROY;
+				//return DESTROY;
 				//or 
-				return STOP;
+				collisionData.collisionresult = STOP;
+				return collisionData;
 			}
 			default: {
-				return -1; //means no collision
+				return collisionData;
 			}
 			}
 			break;
@@ -160,26 +184,32 @@ int collisionResult(int objectId, int objectId2) {
 				case DOOR: {
 					//if collision statement
 					//if no key 
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 					// else if key and sheep
 					//return pass
 					//else return win code 4
 				}
 				case PLAYER: {
 					//if collision statement
-					return DESTROY;
+					collisionData.collisionresult = DESTROY;
+					return collisionData;
 				}
 				case SHEEP: {
-					return DESTROY;
+					collisionData.collisionresult = DESTROY;
+					return collisionData;
 				}
 				case KEY: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case BOMB: {
-					return STOP; //can return new result - run if needed for AI
+					collisionData.collisionresult = STOP;
+					return collisionData; //can return new result - run if needed for AI
 				}
 				case EXPLOSION: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 		
 			}
@@ -189,42 +219,54 @@ int collisionResult(int objectId, int objectId2) {
 		case SHEEP: {
 			switch (objectId2) {
 				case SOFT_WALL: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case DISINTEGRATING_WALL: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case EMPTY_CELL: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
+
 				}
 				case HARD_WALL: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case DOOR: {
 					//if collision statement
 					//if no key 
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 					// else if key and sheep
 					//return pass
 					//else return win code 4
 				}
 				case PLAYER: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case SHEEP: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case KEY: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case BOMB: {
-					return STOP; //can return new result - run if needed for AI
+					collisionData.collisionresult = STOP;
+					return collisionData; //can return new result - run if needed for AI
 				}
 				case EXPLOSION: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				default: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 
 			}
@@ -233,39 +275,49 @@ int collisionResult(int objectId, int objectId2) {
 		case KEY: {
 			switch (objectId2) {
 				case SOFT_WALL: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case DISINTEGRATING_WALL: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case EMPTY_CELL: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case HARD_WALL: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case DOOR: {
 					//if collision statement
 					//if no key 
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 					// else if key and sheep
 					//return pass
 					//else return win code 4
 				}
 				case PLAYER: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case SHEEP: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case BOMB: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case EXPLOSION: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				default: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 			}
 			break;
@@ -273,42 +325,53 @@ int collisionResult(int objectId, int objectId2) {
 		case BOMB: {
 			switch (objectId2) {
 				case SOFT_WALL: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case DISINTEGRATING_WALL: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case EMPTY_CELL: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case HARD_WALL: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case DOOR: {
 					//if collision statement
 					//if no key 
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 					// else if key and sheep
 					//return pass
 					//else return win code 4
 				}
 				case PLAYER: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case SHEEP: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case BOMB: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case EXPLOSION: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case WOLF: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				default: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 			}
 			break;
@@ -316,42 +379,53 @@ int collisionResult(int objectId, int objectId2) {
 		case EXPLOSION: {
 			switch (objectId2) {
 				case SOFT_WALL: {
-					return DESTROY;
+					collisionData.collisionresult = DESTROY;
+					return collisionData;
 				}
 				case DISINTEGRATING_WALL: {
-					return DESTROY;
+					collisionData.collisionresult = DESTROY;
+					return collisionData;
 				}
 				case EMPTY_CELL: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case HARD_WALL: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case DOOR: {
 					//if collision statement
 					//if no key 
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 					// else if key and sheep
 					//return pass
 					//else return win code 4
 				}
 				case PLAYER: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case SHEEP: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 				case BOMB: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case EXPLOSION: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				case WOLF: {
-					return STOP;
+					collisionData.collisionresult = STOP;
+					return collisionData;
 				}
 				default: {
-					return PASS;
+					collisionData.collisionresult = PASS;
+					return collisionData;
 				}
 			}
 			break;
@@ -363,7 +437,7 @@ int collisionResult(int objectId, int objectId2) {
 		}
 			
 	}
-	return 1;
+	return collisionData;
 }
 
 // Check if there is collision within the same frame.

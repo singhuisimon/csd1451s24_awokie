@@ -21,7 +21,7 @@ struct allcollision {
 
 };
 
-int collisionResult(int objectId, int objectId2);
+allcollision collisionResult(int objectId, int objectId2, allcollision collison);
 
 allcollision collide(int stationaryId, int movingId, int xVelo, int yVelo, int xPos2, int yPos2, int result, allcollision);
 
