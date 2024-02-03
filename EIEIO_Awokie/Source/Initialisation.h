@@ -10,3 +10,5 @@
 
 
 #define PLAYER_MOVE 5.f
+// Maximum number of bombs
+#define MAX_BOMBS 10

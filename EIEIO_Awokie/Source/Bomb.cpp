@@ -2,63 +2,82 @@
 
 #include <crtdbg.h> // To check for memory leaks
 #include "Bomb.h"
+#include <stdio.h>
+#include "Initialisation.h"
+#include "player.h"
+#include "enum.h"
 
 // initialising
+
 // bomb state
 int bomb = 0;
+float totaltime[SIZE_ROW][SIZE_COL] = { 0.0f };
+bool bomb_array[SIZE_ROW][SIZE_COL]{ 0 };
+
 // mouse
 s32 pX = 0;
 s32 pY = 0;
-
-// bomb array
 int index_row = 0;
 int index_col = 0;
-bool bomb_array[2][SIZE_ROW][SIZE_COL]{ 0 };
-bool bombstate{0};
 
+// point 0,0 of screen
 f32 xaxis = -((PLAY_AREA_WIDTH + CEll_HEIGHT + CEll_BUF) / 2);
 f32 yaxis = ((PLAY_AREA_HEIGHT - 100 + CEll_HEIGHT + CEll_BUF) / 2);
 
 
-void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE_COL]) {
+
+
+void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE_COL], int array[SIZE_ROW][SIZE_COL]) {
+
 
 	// testing only to be deleted------------------------
 	//bomb_array[bombstate][2][2] = 1;
 	//bomb_array[bombstate][1][1] = 1;
-	//bomb_array[bombstate][8][2] = 1;
-	//bomb_array[bombstate][4][4] = 1;
 	//bomb_array[bombstate][7][7] = 1;
 	// testing code ends here-----------------------------
 
 
-	// Create a scale matrix that scales by 500 x and y
+	// Create a scale matrix
 	AEMtx33 scale = { 0 };
 	AEMtx33Scale(&scale, CEll_HEIGHT, CEll_HEIGHT);
 
-	// Create a translation matrix that translates by
-	// 200 in the x-axis and 100 in the y-axis
+	// Create a translation matrix
 	AEMtx33 translate = { 0 };
 	AEMtx33Trans(&translate, xaxis, yaxis);
 
 	AEMtx33 transform2[SIZE_ROW][SIZE_COL] = { 0 };
 
-	// if mouse click
+
+	// if mouse click for testing
+	/*
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 		AEInputGetCursorPosition(&pX, &pY);
-
 		index_col = pX / (CEll_HEIGHT + CEll_BUF);
 		index_row = (pY - CEll_HEIGHT / 1.2) / (CEll_HEIGHT + CEll_BUF);
-		bomb_array[bombstate][index_row][index_col] = !bomb_array[bombstate][index_row][index_col];
+		bomb_array[index_row][index_col] = !bomb_array[index_row][index_col];
 	}
+	*/
+	// if mouse click for testing end
 
+
+	PlayerStruct player2 = playermovement();
+	player2.x = player2.x - (PLAY_AREA_WIDTH / 2) - (CEll_HEIGHT + CEll_BUF);
+	player2.y = player2.y - (PLAY_AREA_HEIGHT / 2);
+	index_col = (player2.x / (CEll_HEIGHT + CEll_BUF));
+	index_row = -(player2.y / (CEll_HEIGHT + CEll_BUF));
+
+	// if space is press
+	if (AEInputCheckTriggered(AEVK_SPACE)) {
+		// rmb change this part---------------------------------------------------------
+		if (array[index_row][index_col] == EMPTY_CELL) {
+			bomb_array[index_row][index_col] = 1;
+		}
+	}
 
 	for (int i = 0; i < SIZE_ROW; i++) {
 		for (int j = 0; j < SIZE_COL; j++) {
-			 
-			if (bomb_array[bombstate][i][j] == 1) {
-
+			if (bomb_array[i][j] == 1) {
 				// draw the bomb
-
 				// tell the Alpha Engine to get ready to draw something with texture.
 				AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
 
@@ -77,44 +96,22 @@ void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE
 				AEGfxSetTransform(transform[i][j].m);
 				AEGfxMeshDraw(pMesh, AE_GFX_MDM_TRIANGLES);
 
-				
-			}
+			} // endif bomb array
+		} // end j iteration
+	} // end i iteration
 
+	// timer for bomb to tick off
+	for (int i = 0; i < SIZE_ROW; i++) {
+		for (int j = 0; j < SIZE_COL; j++) {
+			if (bomb_array[i][j] == 1) {
+				totaltime[i][j] += AEFrameRateControllerGetFrameTime();
+				if (totaltime[i][j] > 1.5f) {
+					bomb_array[i][j] = 0;
+					totaltime[i][j] = 0.0f;
+				}
+			}
 		}
 	}
 
-
-}
-
-
-
-
-
-// have an array of bomb
-
-/*
-const int numberOfBombs = 5; // You can change this to the desired size
-
-// Create an array of Bomb objects
-Bomb bombs[numberOfBombs];
-
-// Access and use the Bomb objects in the array
-for (int i = 0; i < numberOfBombs; ++i) {
-	std::cout << "Detonating bomb #" << i + 1 << ": ";
-	bombs[i].explode();
-}
-
-return 0;
-*/
-
-
-// float totaltime{};
-// totaltime = getdt
-// if bomb drop
-// if getdt > 2.0f {
-// totaltime = 0;
-//blablabla
-//}
-
-
+} // end void isbomb
 

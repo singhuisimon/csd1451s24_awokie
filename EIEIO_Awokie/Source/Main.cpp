@@ -242,6 +242,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			}
 		}
 
+		// call bomb function
+		isbomb(pMesh, pBombTex, transform, array);
 
 		bool previousDisintegrated{ true };
 		// Update the disintegration process
