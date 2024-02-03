@@ -5,6 +5,7 @@
 #include "Bomb.h"
 #include <stdio.h>
 #include "Initialisation.h"
+#include "player.h"
 
 // initialising
 
@@ -44,14 +45,27 @@ void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE
 
 	AEMtx33 transform2[SIZE_ROW][SIZE_COL] = { 0 };
 
-	// if mouse click
+
+	// if mouse click for testing
+	/*
 	if (AEInputCheckTriggered(AEVK_LBUTTON)) {
 		AEInputGetCursorPosition(&pX, &pY);
 		index_col = pX / (CEll_HEIGHT + CEll_BUF);
 		index_row = (pY - CEll_HEIGHT / 1.2) / (CEll_HEIGHT + CEll_BUF);
 		bomb_array[index_row][index_col] = !bomb_array[index_row][index_col];
 	}
+	*/
+	// if mouse click for testing end
 
+	// if space is press
+	if (AEInputCheckTriggered(AEVK_SPACE)) {
+		PlayerStruct player2 = playermovement();
+		player2.x = player2.x - (PLAY_AREA_WIDTH / 2) - (CEll_HEIGHT + CEll_BUF);
+		player2.y = player2.y - (PLAY_AREA_HEIGHT / 2);
+		index_col = (player2.x / (CEll_HEIGHT + CEll_BUF));
+		index_row = - (player2.y / (CEll_HEIGHT + CEll_BUF));
+		bomb_array[index_row][index_col] = 1;
+	}
 
 	for (int i = 0; i < SIZE_ROW; i++) {
 		for (int j = 0; j < SIZE_COL; j++) {
