@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "Initialisation.h"
 #include "player.h"
+#include "enum.h"
 
 // initialising
 
@@ -25,7 +26,9 @@ f32 xaxis = -((PLAY_AREA_WIDTH + CEll_HEIGHT + CEll_BUF) / 2);
 f32 yaxis = ((PLAY_AREA_HEIGHT - 100 + CEll_HEIGHT + CEll_BUF) / 2);
 
 
-void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE_COL]) {
+
+
+void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE_COL], int array[SIZE_ROW][SIZE_COL]) {
 
 
 	// testing only to be deleted------------------------
@@ -57,14 +60,19 @@ void isbomb(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform[][SIZE
 	*/
 	// if mouse click for testing end
 
+
+	PlayerStruct player2 = playermovement();
+	player2.x = player2.x - (PLAY_AREA_WIDTH / 2) - (CEll_HEIGHT + CEll_BUF);
+	player2.y = player2.y - (PLAY_AREA_HEIGHT / 2);
+	index_col = (player2.x / (CEll_HEIGHT + CEll_BUF));
+	index_row = -(player2.y / (CEll_HEIGHT + CEll_BUF));
+
 	// if space is press
 	if (AEInputCheckTriggered(AEVK_SPACE)) {
-		PlayerStruct player2 = playermovement();
-		player2.x = player2.x - (PLAY_AREA_WIDTH / 2) - (CEll_HEIGHT + CEll_BUF);
-		player2.y = player2.y - (PLAY_AREA_HEIGHT / 2);
-		index_col = (player2.x / (CEll_HEIGHT + CEll_BUF));
-		index_row = - (player2.y / (CEll_HEIGHT + CEll_BUF));
-		bomb_array[index_row][index_col] = 1;
+		// rmb change this part---------------------------------------------------------
+		if (array[index_row][index_col] == EMPTY_CELL) {
+			bomb_array[index_row][index_col] = 1;
+		}
 	}
 
 	for (int i = 0; i < SIZE_ROW; i++) {

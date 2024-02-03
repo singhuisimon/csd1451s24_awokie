@@ -166,7 +166,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 
 		// call bomb function
-		isbomb(pMesh, pBombTex, transform);
+		isbomb(pMesh, pBombTex, transform, array);
 
 		//call player function
 		player(pMesh, pPlayerTex, transform_player);
