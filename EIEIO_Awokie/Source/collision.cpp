@@ -443,12 +443,12 @@ allcollision collisionResult(int objectId, int objectId2, allcollision collision
 // Check if there is collision within the same frame.
 allcollision collide(int stationaryId, int movingId, int xVelo, int yVelo, int xPos2, int yPos2, int result, allcollision collisionData) {
 	if (result == STOP) {
-		std::cout << "STOP";
+		std::cout << "STOP" << std::endl;
 		collisionData.collisionresult = STOP;
 		return collisionData;
 	}
 	else if (result == PASS) {
-		std::cout << "PASS";
+		std::cout << "PASS" << std::endl;
 		collisionData.collisionresult = PASS;
 		return collisionData;
 	}
