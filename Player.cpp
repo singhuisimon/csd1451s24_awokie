@@ -1,18 +1,18 @@
 #include <crtdbg.h> // To check for memory leaks
+#include "AEEngine.h"
 #include "player.h"
-
+#include "Render.h"
+#include "enum.h"
 
 //float player_x = 100.f;
 //float player_y = -175.f;
 
-//PlayerStruct player2
-
-void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player, PlayerStruct player2)
+void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player)
 {
-	
+
 	// Create a scale matrix that scales by 500 x and y
 	AEMtx33 scale = { 0 };
-	AEMtx33Scale(&scale, CEll_HEIGHT, CEll_HEIGHT);
+	AEMtx33Scale(&scale, CEll_HEIGHT*1.5, CEll_HEIGHT*1.5);
 
 	// Create a rotation matrix that rotates by 90 degrees
 	// Note that PI in radians is 180 degrees.
@@ -48,50 +48,49 @@ void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player
 	AEGfxMeshDraw(pMesh, AE_GFX_MDM_TRIANGLES);
 }
 
-
-
-PlayerStruct playermovement(int collided, PlayerStruct player2)
+PlayerStruct playermovement(int collided)
 {
+	
 	if (collided == PASS) {
 		if (AEInputCheckCurr(AEVK_W))
 		{
-			player2.y += PLAYER_MOVE;
-			player2.veloY = player2.y + PLAYER_MOVE;
+			player2.y += 5;
+			player2.veloY = player2.y + 5;
 		}
 		if (AEInputCheckCurr(AEVK_S))
 		{
-			player2.y -= PLAYER_MOVE;
-			player2.veloY = player2.y - PLAYER_MOVE;
+			player2.y -= 5;
+			player2.veloY = player2.y - 5;
 		}
 		if (AEInputCheckCurr(AEVK_D))
 		{
-			player2.x += PLAYER_MOVE;
-			player2.veloX = player2.x + PLAYER_MOVE;
+			player2.x += 5;
+			player2.veloX = player2.x + 5;
 		}
 		if (AEInputCheckCurr(AEVK_A))
 		{
-			player2.x -= PLAYER_MOVE;
-			player2.veloX = player2.x - PLAYER_MOVE;
-		}
-	}else if (collided == STOP){
-		if (AEInputCheckCurr(AEVK_W))
-		{
-			player2.veloY = player2.y + PLAYER_MOVE;
-		}
-		if (AEInputCheckCurr(AEVK_S))
-		{
-			player2.veloY = player2.y - PLAYER_MOVE;
-		}
-		if (AEInputCheckCurr(AEVK_D))
-		{
-			player2.veloX = player2.x + PLAYER_MOVE;
-		}
-		if (AEInputCheckCurr(AEVK_A))
-		{
-			player2.veloX = player2.x - PLAYER_MOVE;
+			player2.x -= 5;
+			player2.veloX = player2.x - 5;
 		}
 	}
-	
+	else if (collided == STOP) {
+		if (AEInputCheckCurr(AEVK_W))
+		{
+			player2.veloY = player2.y + 5;
+		}
+		if (AEInputCheckCurr(AEVK_S))
+		{
+			player2.veloY = player2.y - 5;
+		}
+		if (AEInputCheckCurr(AEVK_D))
+		{
+			player2.veloX = player2.x + 5;
+		}
+		if (AEInputCheckCurr(AEVK_A))
+		{
+			player2.veloX = player2.x - 5;
+		}
+	}
 	return player2;
 }
 

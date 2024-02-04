@@ -15,6 +15,7 @@
     <ClCompile Include="Source\player.cpp" />
     <ClCompile Include="Source\Bomb.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Render.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\collision.h" />
@@ -22,6 +23,31 @@
     <ClInclude Include="Source\player.h" />
     <ClInclude Include="Source\Bomb.h" />
     <ClInclude Include="Source\Initialisation.h" />
+    <ClInclude Include="Source\Render.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\ame.png" />
+    <Image Include="Assets\bomb01.png" />
+    <Image Include="Assets\border.png" />
+    <Image Include="Assets\breakables.png" />
+    <Image Include="Assets\death01.png" />
+    <Image Include="Assets\farmer.png" />
+    <Image Include="Assets\farmer3d.png" />
+    <Image Include="Assets\fixed-tiles.png" />
+    <Image Include="Assets\grass.png" />
+    <Image Include="Assets\PlanetTexture.png" />
+    <Image Include="Assets\sheep01.png" />
+    <Image Include="Assets\sheep02.png" />
+    <Image Include="Assets\sheep03.png" />
+    <Image Include="Assets\sheep04.png" />
+    <Image Include="Assets\sheep05.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\bouken.mp3" />
+    <Media Include="Assets\ore.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Assets\liberation-mono.ttf" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -3,16 +3,9 @@
 #include "AEEngine.h"
 #include "Initialisation.h"
 #include "enum.h"
+#include "collision.h"
 
-void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player);
 
-struct PlayerStruct {
-	int id = PLAYER;
-	/*float x;
-	float y;*/
-	float x = 100.f;
-	float y = -175.f;
-	float veloX = 0;
-	float veloY = 0;
-};
-PlayerStruct playermovement();
+void player(AEGfxVertexList* pMesh, AEGfxTexture* pTex, AEMtx33 transform_player, PlayerStruct player2);
+
+PlayerStruct playermovement(int collided, PlayerStruct player2);
