@@ -1,0 +1,12 @@
+﻿  collision.cpp
+C:\Users\sooen\OneDrive\Documents\GitHub\csd1451s24_awokie\EIEIO_Awokie\Source\collision.cpp(444,91): warning C4100: 'yPos2': unreferenced formal parameter
+C:\Users\sooen\OneDrive\Documents\GitHub\csd1451s24_awokie\EIEIO_Awokie\Source\collision.cpp(444,80): warning C4100: 'xPos2': unreferenced formal parameter
+C:\Users\sooen\OneDrive\Documents\GitHub\csd1451s24_awokie\EIEIO_Awokie\Source\collision.cpp(444,69): warning C4100: 'yVelo': unreferenced formal parameter
+C:\Users\sooen\OneDrive\Documents\GitHub\csd1451s24_awokie\EIEIO_Awokie\Source\collision.cpp(444,58): warning C4100: 'xVelo': unreferenced formal parameter
+C:\Users\sooen\OneDrive\Documents\GitHub\csd1451s24_awokie\EIEIO_Awokie\Source\collision.cpp(444,44): warning C4100: 'movingId': unreferenced formal parameter
+C:\Users\sooen\OneDrive\Documents\GitHub\csd1451s24_awokie\EIEIO_Awokie\Source\collision.cpp(444,26): warning C4100: 'stationaryId': unreferenced formal parameter
+  EIEIO_Awokie.vcxproj -> C:\Users\sooen\OneDrive\Documents\GitHub\csd1451s24_awokie\EIEIO_Awokie\bin\Debug-x64\EIEIO_Awokie.exe
+  14 File(s) copied
+  1 File(s) copied
+  1 File(s) copied
+  1 File(s) copied
